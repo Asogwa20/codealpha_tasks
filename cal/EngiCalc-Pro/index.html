@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EngiCalc Pro - Engineering and mathematical workspace for scientific calculations, complex numbers, matrices, calculus, graphing, electrical engineering, and unit conversions.">
+  <title>EngiCalc Pro</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Skip to workspace</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <button id="menuToggle" class="icon-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">&#9776;</button>
+      <div class="brand">
+        <h1>EngiCalc Pro</h1>
+        <p class="brand-subtitle">Advanced Engineering Scientific Calculator</p>
+      </div>
+      <div class="topbar-actions">
+        <button id="helpBtn" class="secondary-btn" type="button">Help / Quick Guide</button>
+        <button id="themeToggle" class="secondary-btn" type="button" aria-pressed="false">Dark mode</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside id="sidebar" class="sidebar" aria-label="Calculator modules">
+        <nav>
+          <ul class="nav-list">
+            <li><button class="nav-btn active" data-module="scientific">Scientific Calculator</button></li>
+            <li><button class="nav-btn" data-module="complex">Complex Numbers</button></li>
+            <li><button class="nav-btn" data-module="matrices">Matrices</button></li>
+            <li><button class="nav-btn" data-module="calculus">Calculus</button></li>
+            <li><button class="nav-btn" data-module="quadratic">Quadratic Solver</button></li>
+            <li><button class="nav-btn" data-module="graphing">Graphing</button></li>
+            <li><button class="nav-btn" data-module="electrical">Electrical Engineering</button></li>
+            <li><button class="nav-btn" data-module="conversions">Conversions &amp; Constants</button></li>
+            <li><button class="nav-btn" data-module="binary">Binary Calculator</button></li>
+            <li><button class="nav-btn" data-module="history">History</button></li>
+          </ul>
+        </nav>
+      </aside>
+      <div id="sidebarOverlay" class="sidebar-overlay" hidden></div>
+
+      <main id="mainContent" class="workspace" tabindex="-1">
+        <section id="module-scientific" class="module-panel active" aria-labelledby="scientific-title">
+          <div class="panel-header">
+            <h2 id="scientific-title">Scientific Calculator</h2>
+            <p>Evaluate expressions with functions, constants, parentheses, and degree or radian trigonometry.</p>
+          </div>
+          <div class="card-grid two-col">
+            <div class="card">
+              <div class="display-block">
+                <label for="sciExpression">Expression</label>
+                <textarea id="sciExpression" rows="3" spellcheck="false" placeholder="e.g. sin(45) + (3^2) / sqrt(16)"></textarea>
+                <div class="display-result" aria-live="polite">
+                  <span class="result-label">Result</span>
+                  <output id="sciResult">0</output>
+                </div>
+              </div>
+              <div class="inline-controls">
+                <div class="segmented" role="group" aria-label="Angle mode">
+                  <button type="button" class="seg-btn active" data-angle="deg" id="degModeBtn">Degrees</button>
+                  <button type="button" class="seg-btn" data-angle="rad" id="radModeBtn">Radians</button>
+                </div>
+                <div class="action-row">
+                  <button type="button" class="secondary-btn" id="sciCopyBtn">Copy result</button>
+                  <button type="button" class="secondary-btn" id="sciClearBtn">Clear</button>
+                  <button type="button" class="secondary-btn" id="sciDeleteBtn">Delete</button>
+                  <button type="button" class="primary-btn" id="sciEvalBtn">Evaluate</button>
+                </div>
+              </div>
+              <p class="hint">Keyboard: numbers/operators, Enter to evaluate, Backspace to delete, Esc to clear. Use <code>pi</code>, <code>e</code>, <code>sqrt()</code>, <code>cbrt()</code>, <code>log()</code>, <code>ln()</code>, <code>asin()</code>, <code>!</code>, <code>%</code>, and <code>^</code>.</p>
+              <div id="sciError" class="message error" role="alert"></div>
+            </div>
+            <div class="card">
+              <h3>Keypad</h3>
+              <div class="keypad" id="sciKeypad" aria-label="Scientific calculator keypad">
+                <button data-insert="sin(">sin</button>
+                <button data-insert="cos(">cos</button>
+                <button data-insert="tan(">tan</button>
+                <button data-insert="asin(">asin</button>
+                <button data-insert="acos(">acos</button>
+                <button data-insert="atan(">atan</button>
+                <button data-insert="log(">log</button>
+                <button data-insert="ln(">ln</button>
+                <button data-insert="sqrt(">sqrt</button>
+                <button data-insert="cbrt(">cbrt</button>
+                <button data-insert="^">x^y</button>
+                <button data-insert="!">n!</button>
+                <button data-insert="(">(</button>
+                <button data-insert=")">)</button>
+                <button data-insert="pi">π</button>
+                <button data-insert="e">e</button>
+                <button data-insert="7">7</button>
+                <button data-insert="8">8</button>
+                <button data-insert="9">9</button>
+                <button data-insert="/">÷</button>
+                <button data-insert="4">4</button>
+                <button data-insert="5">5</button>
+                <button data-insert="6">6</button>
+                <button data-insert="*">×</button>
+                <button data-insert="1">1</button>
+                <button data-insert="2">2</button>
+                <button data-insert="3">3</button>
+                <button data-insert="-">−</button>
+                <button data-insert="0">0</button>
+                <button data-insert=".">.</button>
+                <button data-insert="%">%</button>
+                <button data-insert="+">+</button>
+                <button data-insert="E">EXP</button>
+                <button data-action="ans">Ans</button>
+                <button data-action="fraction">a/b</button>
+                <button data-action="equals" class="primary-btn">=</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="module-complex" class="module-panel" aria-labelledby="complex-title">
+          <div class="panel-header">
+            <h2 id="complex-title">Complex Numbers</h2>
+            <p>Work with complex numbers in rectangular and polar form.</p>
+          </div>
+          <div class="card-grid two-col">
+            <div class="card">
+              <h3>Inputs</h3>
+              <div class="form-grid two-col">
+                <div>
+                  <h4>Number A</h4>
+                  <label>Real <input type="number" id="cxARe" value="3" step="any"></label>
+                  <label>Imaginary <input type="number" id="cxAIm" value="4" step="any"></label>
+                </div>
+                <div>
+                  <h4>Number B</h4>
+                  <label>Real <input type="number" id="cxBRe" value="1" step="any"></label>
+                  <label>Imaginary <input type="number" id="cxBIm" value="-2" step="any"></label>
+                </div>
+              </div>
+              <label for="cxOperation">Operation</label>
+              <select id="cxOperation">
+                <option value="add">Addition (A + B)</option>
+                <option value="sub">Subtraction (A - B)</option>
+                <option value="mul">Multiplication (A × B)</option>
+                <option value="div">Division (A ÷ B)</option>
+                <option value="conjA">Conjugate of A</option>
+                <option value="conjB">Conjugate of B</option>
+                <option value="modA">Modulus of A</option>
+                <option value="modB">Modulus of B</option>
+                <option value="argA">Argument of A</option>
+                <option value="argB">Argument of B</option>
+                <option value="formsA">Rectangular &amp; polar forms of A</option>
+                <option value="formsB">Rectangular &amp; polar forms of B</option>
+              </select>
+              <label for="cxAngleUnit">Argument / polar angle unit</label>
+              <select id="cxAngleUnit">
+                <option value="deg">Degrees</option>
+                <option value="rad">Radians</option>
+              </select>
+              <div class="action-row">
+                <button type="button" class="primary-btn" id="cxCalcBtn">Calculate</button>
+                <button type="button" class="secondary-btn" id="cxCopyBtn">Copy result</button>
+              </div>
+              <div id="cxError" class="message error" role="alert"></div>
+            </div>
+            <div class="card">
+              <h3>Result</h3>
+              <div id="cxResult" class="result-block" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="module-matrices" class="module-panel" aria-labelledby="matrices-title">
+          <div class="panel-header">
+            <h2 id="matrices-title">Matrix Calculator</h2>
+            <p>Create matrices, perform operations, and get clear validation errors.</p>
+          </div>
+          <div class="card">
+            <div class="form-grid four-col matrix-controls">
+              <label>Rows A <input type="number" id="matARows" min="1" max="6" value="2"></label>
+              <label>Cols A <input type="number" id="matACols" min="1" max="6" value="2"></label>
+              <label>Rows B <input type="number" id="matBRows" min="1" max="6" value="2"></label>
+              <label>Cols B <input type="number" id="matBCols" min="1" max="6" value="2"></label>
+            </div>
+            <div class="action-row wrap">
+              <button type="button" class="secondary-btn" id="matBuildBtn">Build matrices</button>
+              <label>Identity size <input type="number" id="matIdentitySize" min="1" max="6" value="3"></label>
+              <button type="button" class="secondary-btn" id="matIdentityBtn">Generate identity</button>
+              <label for="matOperation">Operation</label>
+              <select id="matOperation">
+                <option value="add">A + B</option>
+                <option value="sub">A - B</option>
+                <option value="mul">A × B</option>
+                <option value="transposeA">Transpose A</option>
+                <option value="transposeB">Transpose B</option>
+                <option value="detA">Determinant A</option>
+                <option value="detB">Determinant B</option>
+                <option value="invA">Inverse A</option>
+                <option value="invB">Inverse B</option>
+              </select>
+              <button type="button" class="primary-btn" id="matCalcBtn">Calculate</button>
+              <button type="button" class="secondary-btn" id="matCopyBtn">Copy result</button>
+            </div>
+            <div id="matError" class="message error" role="alert"></div>
+          </div>
+          <div class="card-grid three-col matrix-grid">
+            <div class="card"><h3>Matrix A</h3><div id="matAContainer" class="matrix-container"></div></div>
+            <div class="card"><h3>Matrix B</h3><div id="matBContainer" class="matrix-container"></div></div>
+            <div class="card"><h3>Result</h3><div id="matResult" class="result-block" aria-live="polite"></div></div>
+          </div>
+        </section>
+
+        <section id="module-calculus" class="module-panel" aria-labelledby="calculus-title">
+          <div class="panel-header">
+            <h2 id="calculus-title">Calculus Toolkit</h2>
+            <p>Numerical differentiation, definite integration, limit estimation, and equation solving with method notes.</p>
+          </div>
+          <div class="card-grid two-col">
+            <div class="card">
+              <label for="calcOperation">Tool</label>
+              <select id="calcOperation">
+                <option value="derivative">Numerical differentiation</option>
+                <option value="integral">Definite integration</option>
+                <option value="limit">Limit estimation</option>
+                <option value="solve">Numerical equation solving</option>
+              </select>
+              <label for="calcFunction">Function f(x)</label>
+              <input type="text" id="calcFunction" value="x^2 + 2*x + 1" spellcheck="false">
+              <div id="calcFields" class="form-grid two-col"></div>
+              <div class="action-row">
+                <button type="button" class="primary-btn" id="calcRunBtn">Compute</button>
+                <button type="button" class="secondary-btn" id="calcCopyBtn">Copy result</button>
+              </div>
+              <p class="hint">Use <code>x</code> as the variable. Results are numerical approximations; accuracy depends on step size, interval, and function behavior.</p>
+              <div id="calcError" class="message error" role="alert"></div>
+            </div>
+            <div class="card">
+              <h3>Result &amp; method</h3>
+              <div id="calcResult" class="result-block" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="module-quadratic" class="module-panel" aria-labelledby="quadratic-title">
+          <div class="panel-header">
+            <h2 id="quadratic-title">Quadratic Equation Solver</h2>
+            <p>Solve equations of the form <code>ax² + bx + c = 0</code> with discriminant analysis, real/complex roots, step-by-step working, and substitution verification.</p>
+          </div>
+          <div class="card-grid two-col">
+            <div class="card">
+              <h3>Coefficients</h3>
+              <div class="form-grid three-col">
+                <label>Coefficient a <input type="number" id="quadA" step="any" placeholder="e.g. 1"></label>
+                <label>Coefficient b <input type="number" id="quadB" step="any" placeholder="e.g. -5"></label>
+                <label>Coefficient c <input type="number" id="quadC" step="any" placeholder="e.g. 6"></label>
+              </div>
+              <label for="quadExample">Example equations</label>
+              <select id="quadExample">
+                <option value="">Select an example...</option>
+                <option value="twoReal">x² - 5x + 6 = 0 (two distinct real roots)</option>
+                <option value="repeated">x² + 2x + 1 = 0 (one repeated real root)</option>
+                <option value="complex">x² + 1 = 0 (complex conjugate roots)</option>
+                <option value="linear">2x + 4 = 0 (a = 0, linear equation)</option>
+              </select>
+              <div class="action-row">
+                <button type="button" class="primary-btn" id="quadSolveBtn">Solve</button>
+                <button type="button" class="secondary-btn" id="quadCopyBtn">Copy result</button>
+                <button type="button" class="secondary-btn" id="quadClearBtn">Clear</button>
+              </div>
+              <p class="hint">Displays the discriminant, root classification, quadratic formula, step-by-step calculation, and verification by substitution. If <code>a = 0</code>, the solver explains that the equation is not quadratic and solves it as a linear equation where possible.</p>
+              <div id="quadError" class="message error" role="alert"></div>
+            </div>
+            <div class="card">
+              <h3>Solution details</h3>
+              <div id="quadResult" class="result-block" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="module-graphing" class="module-panel" aria-labelledby="graphing-title">
+          <div class="panel-header">
+            <h2 id="graphing-title">Graphing Calculator</h2>
+            <p>Plot functions of <code>x</code> over a chosen range and inspect sampled values.</p>
+          </div>
+          <div class="card-grid two-col">
+            <div class="card">
+              <label for="graphFunction">Function f(x)</label>
+              <input type="text" id="graphFunction" value="sin(x)" spellcheck="false">
+              <div class="form-grid three-col">
+                <label>Min x <input type="number" id="graphMinX" value="-10" step="any"></label>
+                <label>Max x <input type="number" id="graphMaxX" value="10" step="any"></label>
+                <label>Samples <input type="number" id="graphSamples" value="200" min="20" max="1000" step="1"></label>
+              </div>
+              <div class="action-row">
+                <button type="button" class="primary-btn" id="graphPlotBtn">Generate graph</button>
+                <button type="button" class="secondary-btn" id="graphClearBtn">Clear graph</button>
+              </div>
+              <div id="graphError" class="message error" role="alert"></div>
+              <h3>Plotted values</h3>
+              <div class="table-wrap small-table-wrap">
+                <table class="data-table" aria-label="Plotted values">
+                  <thead><tr><th>x</th><th>f(x)</th></tr></thead>
+                  <tbody id="graphValuesBody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card graph-card">
+              <canvas id="graphCanvas" aria-label="Function graph" role="img"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <section id="module-electrical" class="module-panel" aria-labelledby="electrical-title">
+          <div class="panel-header">
+            <h2 id="electrical-title">Electrical Engineering</h2>
+            <p>Common electrical calculations with formulas, substituted values, units, and validation.</p>
+          </div>
+          <div class="card-grid two-col">
+            <div class="card">
+              <label for="elecTool">Calculation tool</label>
+              <select id="elecTool">
+                <option value="ohms">Ohm's Law (solve for V, I, or R)</option>
+                <option value="power">Electrical Power (P, V, I, R)</option>
+                <option value="series">Series resistors</option>
+                <option value="parallel">Parallel resistors</option>
+                <option value="ac">AC circuit calculations</option>
+              </select>
+              <div id="elecFields" class="form-grid two-col"></div>
+              <div class="action-row">
+                <button type="button" class="primary-btn" id="elecCalcBtn">Calculate</button>
+                <button type="button" class="secondary-btn" id="elecCopyBtn">Copy result</button>
+              </div>
+              <div id="elecError" class="message error" role="alert"></div>
+            </div>
+            <div class="card">
+              <h3>Result details</h3>
+              <div id="elecResult" class="result-block" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="module-conversions" class="module-panel" aria-labelledby="conversions-title">
+          <div class="panel-header">
+            <h2 id="conversions-title">Conversions &amp; Scientific Constants</h2>
+            <p>Convert engineering units and reference commonly used scientific constants.</p>
+          </div>
+          <div class="card-grid two-col">
+            <div class="card">
+              <h3>Unit converter</h3>
+              <label for="convCategory">Category</label>
+              <select id="convCategory"></select>
+              <div class="form-grid three-col align-end">
+                <label>Value <input type="number" id="convValue" value="1" step="any"></label>
+                <label>From <select id="convFrom"></select></label>
+                <label>To <select id="convTo"></select></label>
+              </div>
+              <div class="action-row">
+                <button type="button" class="primary-btn" id="convBtn">Convert</button>
+                <button type="button" class="secondary-btn" id="convCopyBtn">Copy result</button>
+              </div>
+              <div id="convError" class="message error" role="alert"></div>
+              <div id="convResult" class="result-block" aria-live="polite"></div>
+            </div>
+            <div class="card">
+              <h3>Scientific constants</h3>
+              <div class="table-wrap">
+                <table class="data-table" aria-label="Scientific constants">
+                  <thead><tr><th>Constant</th><th>Symbol</th><th>Value</th><th>Unit</th></tr></thead>
+                  <tbody id="constantsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="module-binary" class="module-panel" aria-labelledby="binary-title">
+          <div class="panel-header">
+            <h2 id="binary-title">Binary Calculator</h2>
+            <p>Perform base conversions, binary arithmetic, bitwise operations, and unsigned/signed two's-complement representation with BigInt-based fixed-width handling.</p>
+          </div>
+          <div class="card-grid two-col">
+            <div class="card">
+              <label for="binOperation">Operation</label>
+              <select id="binOperation">
+                <optgroup label="Number conversions">
+                  <option value="dec-bin">Decimal to binary</option>
+                  <option value="bin-dec">Binary to decimal</option>
+                  <option value="bin-hex">Binary to hexadecimal</option>
+                  <option value="hex-bin">Hexadecimal to binary</option>
+                  <option value="bin-oct">Binary to octal</option>
+                  <option value="oct-bin">Octal to binary</option>
+                </optgroup>
+                <optgroup label="Binary arithmetic">
+                  <option value="add">Addition (A + B)</option>
+                  <option value="sub">Subtraction (A - B)</option>
+                  <option value="mul">Multiplication (A × B)</option>
+                  <option value="div">Division (A ÷ B, quotient &amp; remainder)</option>
+                </optgroup>
+                <optgroup label="Bitwise operations">
+                  <option value="and">AND</option>
+                  <option value="or">OR</option>
+                  <option value="xor">XOR</option>
+                  <option value="not">NOT</option>
+                </optgroup>
+                <optgroup label="Number representation">
+                  <option value="repr">Unsigned &amp; signed two's complement</option>
+                </optgroup>
+              </select>
+              <div id="binBitWidthWrap" class="form-grid two-col" style="margin-top:0.5rem;">
+                <label>Bit width (for signed/fixed-width operations) <input type="number" id="binBitWidth" min="1" max="4096" step="1" value="8"></label>
+              </div>
+              <div id="binFields" class="form-grid two-col"></div>
+              <div class="action-row">
+                <button type="button" class="primary-btn" id="binCalcBtn">Calculate</button>
+                <button type="button" class="secondary-btn" id="binExampleBtn">Example values</button>
+                <button type="button" class="secondary-btn" id="binCopyBtn">Copy result</button>
+                <button type="button" class="secondary-btn" id="binClearBtn">Clear</button>
+              </div>
+              <p class="hint">Binary inputs must contain only 0 and 1. Hex inputs must be valid hexadecimal (0-9, A-F). Octal inputs must use digits 0-7. Bitwise/arithmetic operations use BigInt (not 32-bit JavaScript bitwise operators). Two's-complement results are limited by the selected bit width; overflow/wrap-around is reported when applicable.</p>
+              <div id="binError" class="message error" role="alert"></div>
+            </div>
+            <div class="card">
+              <h3>Result &amp; explanation</h3>
+              <div id="binResult" class="result-block" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="module-history" class="module-panel" aria-labelledby="history-title">
+          <div class="panel-header">
+            <h2 id="history-title">Calculation History</h2>
+            <p>Review saved calculations, reuse them where practical, or clear the history.</p>
+          </div>
+          <div class="card">
+            <div class="action-row">
+              <button type="button" class="secondary-btn danger-btn" id="historyClearBtn">Clear history</button>
+            </div>
+            <div id="historyEmpty" class="message info">No calculations saved yet.</div>
+            <div class="table-wrap">
+              <table class="data-table" aria-label="Calculation history">
+                <thead><tr><th>Date &amp; time</th><th>Module</th><th>Expression / input</th><th>Result</th><th>Action</th></tr></thead>
+                <tbody id="historyBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="welcomeModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeDesc" hidden>
+    <div class="modal-content">
+      <h2 id="welcomeTitle">Welcome to EngiCalc Pro</h2>
+      <p id="welcomeDesc">Your engineering and mathematical workspace for scientific calculations, complex numbers, matrices, calculus, graphing, electrical engineering, and unit conversions.</p>
+      <div class="guide-block">
+        <h3>How to use this application</h3>
+        <ol>
+          <li>Use the navigation menu to choose a calculation module.</li>
+          <li>Enter your values or expression in the input fields.</li>
+          <li>Press the calculate, evaluate, or plot button to see results.</li>
+          <li>Review formulas, methods, units, and any validation messages shown.</li>
+          <li>Open History to revisit or reuse previous calculations.</li>
+        </ol>
+        <h3>Quick navigation guide</h3>
+        <ol>
+          <li><strong>Scientific Calculator</strong> — perform everyday and advanced mathematical calculations.</li>
+          <li><strong>Complex Numbers</strong> — calculate with real and imaginary numbers.</li>
+          <li><strong>Matrices</strong> — perform matrix operations.</li>
+          <li><strong>Calculus</strong> — explore numerical differentiation, integration, limits, and equation solving.</li>
+          <li><strong>Quadratic Solver</strong> — solve <code>ax² + bx + c = 0</code>, analyze roots, and verify solutions.</li>
+          <li><strong>Graphing</strong> — plot mathematical functions.</li>
+          <li><strong>Electrical Engineering</strong> — solve common electrical engineering calculations.</li>
+          <li><strong>Conversions &amp; Constants</strong> — convert units and access useful scientific constants.</li>
+          <li><strong>Binary Calculator</strong> — convert number bases, do binary arithmetic, bitwise operations, and view two's-complement representations.</li>
+          <li><strong>History</strong> — review previous calculations.</li>
+        </ol>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="primary-btn" id="welcomeStartBtn">Get Started</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="helpModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+    <div class="modal-content">
+      <div class="modal-header-row">
+        <h2 id="helpTitle">Help / Quick Guide</h2>
+        <button type="button" class="icon-btn" id="helpCloseBtn" aria-label="Close help">&times;</button>
+      </div>
+      <div class="guide-block">
+        <p><strong>EngiCalc Pro</strong> is a browser-based engineering workspace. Choose a module from the left menu, enter inputs, and use the action buttons to calculate or plot.</p>
+        <h3>Module tips</h3>
+        <ul>
+          <li><strong>Scientific Calculator:</strong> type expressions like <code>2*sin(pi/4)+sqrt(9)</code>. Use Degrees/Radians for trig functions. Press Enter to evaluate.</li>
+          <li><strong>Complex Numbers:</strong> enter real and imaginary parts for A and B, choose an operation, and calculate. Results show rectangular and polar forms where relevant.</li>
+          <li><strong>Matrices:</strong> set dimensions, build matrices, fill values, then choose an operation. The app explains dimension or invertibility errors.</li>
+          <li><strong>Calculus:</strong> enter <code>f(x)</code> and required values. Results are numerical approximations and include a short method explanation.</li>
+          <li><strong>Quadratic Solver:</strong> enter coefficients <code>a</code>, <code>b</code>, and <code>c</code> for <code>ax² + bx + c = 0</code>. The solver shows the discriminant, root type (distinct real, repeated real, or complex conjugate), quadratic formula steps, and substitution verification. If <code>a = 0</code>, it explains the equation is not quadratic and solves it as linear when possible.</li>
+          <li><strong>Graphing:</strong> enter <code>f(x)</code>, set x-range and samples, then generate the graph. Invalid points are reported clearly.</li>
+          <li><strong>Electrical Engineering:</strong> select a tool, provide known values, and calculate. Formulas, substituted values, units, and results are shown.</li>
+          <li><strong>Conversions &amp; Constants:</strong> pick a category/unit pair to convert, or browse constants with values and units.</li>
+          <li><strong>Binary Calculator:</strong> choose a conversion, arithmetic, bitwise, or representation operation. Use the bit width for signed two's-complement/fixed-width behavior. Results include explanations, quotient and remainder for division, and overflow/two's-complement limitations. Calculations use BigInt (not 32-bit JavaScript bitwise operators).</li>
+          <li><strong>History:</strong> saved calculations persist after refresh. Reuse loads supported inputs back into the relevant module.</li>
+        </ul>
+        <h3>Important notes</h3>
+        <ul>
+          <li>Calculus and graphing results can be numerical approximations.</li>
+          <li>Always check units in electrical calculations.</li>
+          <li>If you see an error, adjust inputs (for example avoid division by zero, invalid domains, or incompatible matrix sizes).</li>
+        </ul>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="primary-btn" id="helpDoneBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="js/history.js"></script>
+  <script src="js/scientific.js"></script>
+  <script src="js/complex.js"></script>
+  <script src="js/matrices.js"></script>
+  <script src="js/calculus.js"></script>
+  <script src="js/quadratic.js"></script>
+  <script src="js/graphing.js"></script>
+  <script src="js/electrical.js"></script>
+  <script src="js/conversions.js"></script>
+  <script src="js/binary.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

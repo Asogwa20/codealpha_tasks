@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Precious Tech Gallary</title>
+  <meta name="description" content="Precious Tech Gallary — advanced image gallery and image discovery application">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Skip to content</a>
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+      <div class="sidebar-header">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">◈</span>
+          <div>
+            <h1 class="brand-title">Precious Tech Gallary</h1>
+            <p class="brand-subtitle">Image workspace</p>
+          </div>
+        </div>
+        <button class="icon-btn sidebar-close" id="sidebarCloseBtn" aria-label="Close navigation">✕</button>
+      </div>
+      <nav class="nav" aria-label="Main">
+        <button class="nav-item active" data-view="dashboard"><span>Dashboard</span></button>
+        <button class="nav-item" data-view="gallery"><span>My Gallery</span></button>
+        <button class="nav-item" data-view="explore"><span>Explore Images</span></button>
+        <button class="nav-item" data-view="albums"><span>Albums</span></button>
+        <button class="nav-item" data-view="favorites"><span>Favourites</span></button>
+        <button class="nav-item" data-view="trash"><span>Trash</span></button>
+        <button class="nav-item" data-view="help"><span>Quick Help</span></button>
+      </nav>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn" id="sidebarToggleBtn" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
+          <div>
+            <h2 id="viewTitle">Dashboard</h2>
+            <p id="viewSubtitle" class="muted">Overview of your library</p>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <label class="search-wrap" for="globalSearchInput">
+            <span class="sr-only">Search gallery</span>
+            <input type="search" id="globalSearchInput" placeholder="Search titles, tags, descriptions…" autocomplete="off">
+          </label>
+          <button class="secondary-btn" id="themeToggleBtn" aria-pressed="false">Toggle theme</button>
+          <button class="primary-btn" id="quickUploadBtn">Upload images</button>
+        </div>
+      </header>
+
+      <main id="mainContent" class="main-content" tabindex="-1">
+        <!-- Dashboard -->
+        <section id="view-dashboard" class="view active" aria-labelledby="viewTitle">
+          <div class="stats-grid" id="dashboardStats">
+            <article class="stat-card"><h3>Total images</h3><p class="stat-value" id="statTotalImages">0</p></article>
+            <article class="stat-card"><h3>Total albums</h3><p class="stat-value" id="statTotalAlbums">0</p></article>
+            <article class="stat-card"><h3>Favourites</h3><p class="stat-value" id="statFavorites">0</p></article>
+            <article class="stat-card"><h3>Recently added</h3><p class="stat-value" id="statRecent">0</p></article>
+            <article class="stat-card"><h3>Storage used</h3><p class="stat-value" id="statStorage">—</p><p class="muted small" id="statStorageDetail"></p></article>
+          </div>
+          <div class="panel-grid">
+            <section class="panel">
+              <div class="panel-header">
+                <h3>Quick upload</h3>
+              </div>
+              <div class="upload-dropzone compact" id="dashboardDropzone" tabindex="0" role="button" aria-label="Upload images by dropping files or pressing Enter">
+                <p><strong>Drag and drop images here</strong></p>
+                <p class="muted">or use the Upload images button. JPG, PNG, GIF, WebP, BMP, SVG supported.</p>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <h3>Recently uploaded</h3>
+                <button class="link-btn" data-goto="gallery">View all</button>
+              </div>
+              <div id="dashboardRecentGrid" class="mini-grid"></div>
+              <p class="empty-state hidden" id="dashboardRecentEmpty">No images yet. Upload images to get started.</p>
+            </section>
+          </div>
+        </section>
+
+        <!-- My Gallery -->
+        <section id="view-gallery" class="view" aria-labelledby="viewTitle">
+          <div class="toolbar panel">
+            <div class="toolbar-row">
+              <div class="toolbar-group">
+                <label>Sort
+                  <select id="gallerySort">
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                    <option value="name-asc">Name A–Z</option>
+                    <option value="name-desc">Name Z–A</option>
+                    <option value="size-desc">Largest size</option>
+                  </select>
+                </label>
+                <label>Category
+                  <select id="galleryCategoryFilter"><option value="">All categories</option></select>
+                </label>
+                <label>Tag
+                  <select id="galleryTagFilter"><option value="">All tags</option></select>
+                </label>
+              </div>
+              <div class="toolbar-group">
+                <button class="secondary-btn" id="selectModeBtn" aria-pressed="false">Select</button>
+                <button class="secondary-btn" id="selectAllBtn" disabled>Select all</button>
+                <button class="danger-btn" id="bulkDeleteBtn" disabled>Delete selected</button>
+                <button class="secondary-btn" id="bulkDownloadBtn" disabled>Download selected</button>
+              </div>
+            </div>
+            <div class="upload-dropzone" id="galleryDropzone" tabindex="0" role="button" aria-label="Upload images by dropping files or pressing Enter">
+              <p><strong>Drop images to upload</strong> or <button type="button" class="link-btn" id="galleryBrowseBtn">browse files</button></p>
+              <p class="muted small">You can add titles, descriptions, categories and tags after upload.</p>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" multiple hidden>
+          </div>
+          <div id="galleryGrid" class="image-grid masonry"></div>
+          <p class="empty-state hidden" id="galleryEmpty">Your gallery is empty. Upload images or import from Explore Images.</p>
+        </section>
+
+        <!-- Explore Images -->
+        <section id="view-explore" class="view" aria-labelledby="viewTitle">
+          <div class="panel explore-panel">
+            <form id="exploreForm" class="explore-form" role="search">
+              <label for="exploreQuery" class="sr-only">Search Wikimedia Commons</label>
+              <input type="search" id="exploreQuery" placeholder="Search Wikimedia Commons (e.g. mountains, architecture, cats)…" required>
+              <button type="submit" class="primary-btn" id="exploreSearchBtn">Search</button>
+            </form>
+            <p class="muted small">Source: <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>. Results include creator and licence information where available. Respect image licences and attribution requirements.</p>
+          </div>
+          <div id="exploreStatus" class="status-line" aria-live="polite"></div>
+          <div id="exploreGrid" class="image-grid cards-grid"></div>
+          <p class="empty-state hidden" id="exploreEmpty">Search to discover images from Wikimedia Commons.</p>
+        </section>
+
+        <!-- Albums -->
+        <section id="view-albums" class="view" aria-labelledby="viewTitle">
+          <div class="panel">
+            <form id="createAlbumForm" class="inline-form">
+              <label for="newAlbumName" class="sr-only">New album name</label>
+              <input type="text" id="newAlbumName" placeholder="New album name" maxlength="80" required>
+              <button type="submit" class="primary-btn">Create album</button>
+            </form>
+          </div>
+          <div id="albumsList" class="albums-grid"></div>
+          <p class="empty-state hidden" id="albumsEmpty">No albums yet. Create one to organize your images.</p>
+          <section id="albumDetail" class="album-detail hidden" aria-label="Album contents">
+            <div class="panel-header">
+              <button class="secondary-btn" id="albumBackBtn">← Back to albums</button>
+              <h3 id="albumDetailTitle"></h3>
+              <div class="toolbar-group">
+                <button class="secondary-btn" id="renameAlbumBtn">Rename</button>
+                <button class="danger-btn" id="deleteAlbumBtn">Delete album</button>
+              </div>
+            </div>
+            <div id="albumImagesGrid" class="image-grid masonry"></div>
+            <p class="empty-state hidden" id="albumImagesEmpty">This album has no images yet.</p>
+          </section>
+        </section>
+
+        <!-- Favourites -->
+        <section id="view-favorites" class="view" aria-labelledby="viewTitle">
+          <div id="favoritesGrid" class="image-grid masonry"></div>
+          <p class="empty-state hidden" id="favoritesEmpty">No favourites yet. Mark images with the heart icon.</p>
+        </section>
+
+        <!-- Trash -->
+        <section id="view-trash" class="view" aria-labelledby="viewTitle">
+          <div class="panel toolbar-row">
+            <p class="muted">Deleted images are kept here until you restore or permanently delete them.</p>
+            <button class="danger-btn" id="emptyTrashBtn">Empty trash</button>
+          </div>
+          <div id="trashGrid" class="image-grid masonry"></div>
+          <p class="empty-state hidden" id="trashEmpty">Trash is empty.</p>
+        </section>
+
+        <!-- Help -->
+        <section id="view-help" class="view" aria-labelledby="viewTitle">
+          <div class="panel help-panel">
+            <h3>Quick Help</h3>
+            <ul class="help-list">
+              <li><strong>Upload:</strong> Use the Upload button or drag and drop images into My Gallery or Dashboard.</li>
+              <li><strong>Organize:</strong> Add titles, descriptions, categories, and tags from an image card's Edit details action. Create albums and add images to multiple albums.</li>
+              <li><strong>Find images:</strong> Use the top search bar for your gallery, and filters/sort in My Gallery. Explore Images searches Wikimedia Commons.</li>
+              <li><strong>Favourites:</strong> Click the heart icon on any image to mark or unmark it.</li>
+              <li><strong>Edit:</strong> Open an image and choose Edit to crop, rotate, flip, resize, adjust brightness/contrast, or apply filters. Edited results are saved as copies.</li>
+              <li><strong>Lightbox:</strong> Click an image to preview full screen. Use ←/→ to navigate and Esc to close.</li>
+              <li><strong>Trash:</strong> Deleted gallery images move to Trash where you can restore or permanently delete them.</li>
+              <li><strong>Storage:</strong> Images are stored locally in your browser using IndexedDB. Clearing browser data may remove them.</li>
+              <li><strong>Licensing:</strong> When importing from Wikimedia Commons, review the image licence and provide attribution as required by the licence.</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Image details / edit metadata modal -->
+  <dialog id="detailsDialog" class="modal">
+    <form method="dialog" id="detailsForm" class="modal-content">
+      <div class="modal-header">
+        <h3 id="detailsDialogTitle">Image details</h3>
+        <button type="button" class="icon-btn" data-close-dialog aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body form-grid">
+        <input type="hidden" id="detailsImageId">
+        <label>Title <input type="text" id="detailsTitle" maxlength="120"></label>
+        <label>Category <input type="text" id="detailsCategory" maxlength="60" list="categorySuggestions"></label>
+        <datalist id="categorySuggestions"></datalist>
+        <label class="full-span">Description <textarea id="detailsDescription" rows="3" maxlength="1000"></textarea></label>
+        <label class="full-span">Tags (comma separated) <input type="text" id="detailsTags" placeholder="nature, travel, sunset"></label>
+        <fieldset class="full-span albums-fieldset">
+          <legend>Albums</legend>
+          <div id="detailsAlbumsList" class="checkbox-list"></div>
+        </fieldset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="secondary-btn" data-close-dialog>Cancel</button>
+        <button type="submit" class="primary-btn">Save details</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Explore preview modal -->
+  <dialog id="explorePreviewDialog" class="modal wide">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="explorePreviewTitle">Image preview</h3>
+        <button type="button" class="icon-btn" data-close-dialog aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body explore-preview-body">
+        <div class="explore-preview-media"><img id="explorePreviewImage" alt=""></div>
+        <div class="explore-preview-meta">
+          <dl>
+            <dt>Author / creator</dt><dd id="explorePreviewAuthor">—</dd>
+            <dt>Licence</dt><dd id="explorePreviewLicense">—</dd>
+            <dt>Source page</dt><dd id="explorePreviewSource">—</dd>
+            <dt>Description</dt><dd id="explorePreviewDescription">—</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="secondary-btn" data-close-dialog>Close</button>
+        <a id="explorePreviewOpenSource" class="secondary-btn" target="_blank" rel="noopener noreferrer">Open source</a>
+        <button type="button" class="secondary-btn" id="explorePreviewDownloadBtn">Download</button>
+        <button type="button" class="primary-btn" id="explorePreviewImportBtn">Add to My Gallery</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Editor modal -->
+  <dialog id="editorDialog" class="modal editor-modal">
+    <div class="modal-content editor-content">
+      <div class="modal-header">
+        <h3 id="editorTitle">Image editor</h3>
+        <button type="button" class="icon-btn" data-close-dialog aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body editor-body">
+        <div class="editor-canvas-wrap">
+          <canvas id="editorCanvas"></canvas>
+          <p class="muted small" id="editorHint">Adjustments preview live. Crop uses the selected area.</p>
+        </div>
+        <div class="editor-controls">
+          <div class="control-group">
+            <h4>Transform</h4>
+            <div class="btn-row">
+              <button type="button" class="secondary-btn" data-editor-action="rotate-left">Rotate ⟲</button>
+              <button type="button" class="secondary-btn" data-editor-action="rotate-right">Rotate ⟳</button>
+              <button type="button" class="secondary-btn" data-editor-action="flip-h">Flip H</button>
+              <button type="button" class="secondary-btn" data-editor-action="flip-v">Flip V</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <h4>Crop</h4>
+            <div class="crop-grid">
+              <label>X <input type="number" id="cropX" min="0" value="0"></label>
+              <label>Y <input type="number" id="cropY" min="0" value="0"></label>
+              <label>W <input type="number" id="cropW" min="1" value="1"></label>
+              <label>H <input type="number" id="cropH" min="1" value="1"></label>
+            </div>
+            <button type="button" class="secondary-btn" data-editor-action="apply-crop">Apply crop</button>
+          </div>
+          <div class="control-group">
+            <h4>Resize</h4>
+            <div class="crop-grid">
+              <label>Width <input type="number" id="resizeW" min="1"></label>
+              <label>Height <input type="number" id="resizeH" min="1"></label>
+            </div>
+            <label class="inline-check"><input type="checkbox" id="resizeLock" checked> Lock aspect ratio</label>
+            <button type="button" class="secondary-btn" data-editor-action="apply-resize">Apply resize</button>
+          </div>
+          <div class="control-group">
+            <h4>Adjustments</h4>
+            <label>Brightness <input type="range" id="adjBrightness" min="0" max="200" value="100"></label>
+            <label>Contrast <input type="range" id="adjContrast" min="0" max="200" value="100"></label>
+            <label>Filter
+              <select id="adjFilter">
+                <option value="none">None</option>
+                <option value="grayscale">Grayscale</option>
+                <option value="sepia">Sepia</option>
+                <option value="invert">Invert</option>
+                <option value="saturate">Saturate</option>
+              </select>
+            </label>
+          </div>
+          <div class="control-group btn-row">
+            <button type="button" class="secondary-btn" data-editor-action="reset">Reset changes</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="secondary-btn" data-close-dialog>Cancel</button>
+        <button type="button" class="primary-btn" id="editorSaveCopyBtn">Save edited copy</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Image preview">
+    <div class="lightbox-bar">
+      <div class="lightbox-title-wrap">
+        <h3 id="lightboxTitle">Image</h3>
+        <p id="lightboxMeta" class="muted small"></p>
+      </div>
+      <div class="lightbox-actions">
+        <button class="icon-btn" id="lightboxFavBtn" title="Favourite" aria-label="Toggle favourite">♡</button>
+        <button class="icon-btn" id="lightboxEditBtn" title="Edit" aria-label="Edit image">✎</button>
+        <button class="icon-btn" id="lightboxDownloadBtn" title="Download" aria-label="Download image">⬇</button>
+        <button class="icon-btn" id="lightboxDeleteBtn" title="Delete" aria-label="Delete image">🗑</button>
+        <button class="icon-btn" id="lightboxCloseBtn" title="Close" aria-label="Close preview">✕</button>
+      </div>
+    </div>
+    <button class="lightbox-nav prev" id="lightboxPrevBtn" aria-label="Previous image">‹</button>
+    <figure class="lightbox-figure">
+      <img id="lightboxImage" alt="">
+      <figcaption id="lightboxCaption"></figcaption>
+    </figure>
+    <button class="lightbox-nav next" id="lightboxNextBtn" aria-label="Next image">›</button>
+  </div>
+
+  <!-- Welcome dialog -->
+  <dialog id="welcomeDialog" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Welcome to Precious Tech Gallary</h3>
+        <button type="button" class="icon-btn" data-close-dialog aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Manage your personal image library and discover images from Wikimedia Commons.</p>
+        <ul class="help-list">
+          <li>Upload images via drag and drop or the Upload button.</li>
+          <li>Organize with albums, favourites, tags, and categories.</li>
+          <li>Use Explore Images to search Wikimedia Commons and import images with licence details.</li>
+          <li>Edit images in the browser and save edited copies.</li>
+          <li>Your gallery is stored locally in this browser (IndexedDB).</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="secondary-btn" id="welcomeHelpBtn">Open Quick Help</button>
+        <button type="button" class="primary-btn" id="welcomeStartBtn">Get started</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Generic confirm dialog -->
+  <dialog id="confirmDialog" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="confirmTitle">Confirm</h3>
+      </div>
+      <div class="modal-body"><p id="confirmMessage"></p></div>
+      <div class="modal-footer">
+        <button type="button" class="secondary-btn" id="confirmCancelBtn">Cancel</button>
+        <button type="button" class="danger-btn" id="confirmOkBtn">Confirm</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+  <div id="loadingOverlay" class="loading-overlay hidden" aria-hidden="true"><div class="spinner" role="status" aria-label="Loading"></div></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

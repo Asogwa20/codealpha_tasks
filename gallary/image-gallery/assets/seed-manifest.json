@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "albums": [
+    {
+      "name": "Nature & Landscapes",
+      "category": "Nature & Landscapes",
+      "images": [
+        { "file": "assets/nature-landscapes/anna-pelzer-IGfIGP5ONV0-unsplash.jpg", "title": "Anna Pelzer — Unsplash", "attribution": "Photo by Anna Pelzer on Unsplash", "sourcePage": "https://unsplash.com/photos/IGfIGP5ONV0", "license": "Unsplash License" },
+        { "file": "assets/nature-landscapes/gabriel-xu-rwRLvqpAI_c-unsplash.jpg", "title": "Gabriel Xu — Unsplash", "attribution": "Photo by Gabriel Xu on Unsplash", "sourcePage": "https://unsplash.com/photos/rwRLvqpAI_c", "license": "Unsplash License" },
+        { "file": "assets/nature-landscapes/gwen-weustink-I3C1sSXj1i8-unsplash.jpg", "title": "Gwen Weustink — Unsplash", "attribution": "Photo by Gwen Weustink on Unsplash", "sourcePage": "https://unsplash.com/photos/I3C1sSXj1i8", "license": "Unsplash License" },
+        { "file": "assets/nature-landscapes/kristaps-ungurs-UWPXBzPYNkA-unsplash.jpg", "title": "Kristaps Ungurs — Unsplash", "attribution": "Photo by Kristaps Ungurs on Unsplash", "sourcePage": "https://unsplash.com/photos/UWPXBzPYNkA", "license": "Unsplash License" },
+        { "file": "assets/nature-landscapes/laura-college-K_Na5gCmh38-unsplash.jpg", "title": "Laura College — Unsplash", "attribution": "Photo by Laura College on Unsplash", "sourcePage": "https://unsplash.com/photos/K_Na5gCmh38", "license": "Unsplash License" },
+        { "file": "assets/nature-landscapes/marek-piwnicki--_OuVFhN5BU-unsplash.jpg", "title": "Marek Piwnicki — Unsplash", "attribution": "Photo by Marek Piwnicki on Unsplash", "sourcePage": "https://unsplash.com/photos/-_OuVFhN5BU", "license": "Unsplash License" },
+        { "file": "assets/nature-landscapes/mark-harpur-K2s_YE031CA-unsplash.jpg", "title": "Mark Harpur — Unsplash", "attribution": "Photo by Mark Harpur on Unsplash", "sourcePage": "https://unsplash.com/photos/K2s_YE031CA", "license": "Unsplash License" },
+        { "file": "assets/nature-landscapes/pietro-de-grandi-T7K4aEPoGGk-unsplash.jpg", "title": "Pietro De Grandi — Unsplash", "attribution": "Photo by Pietro De Grandi on Unsplash", "sourcePage": "https://unsplash.com/photos/T7K4aEPoGGk", "license": "Unsplash License" },
+        { "file": "assets/nature-landscapes/ray-hennessy-xUUZcpQlqpM-unsplash.jpg", "title": "Ray Hennessy — Unsplash", "attribution": "Photo by Ray Hennessy on Unsplash", "sourcePage": "https://unsplash.com/photos/xUUZcpQlqpM", "license": "Unsplash License" }
+      ]
+    },
+    {
+      "name": "Abstract & Design",
+      "category": "Abstract & Design",
+      "images": [
+        { "file": "assets/abstract-design/hasan-almasi-5PgHboIliNU-unsplash.jpg", "title": "Hasan Almasi — Unsplash", "attribution": "Photo by Hasan Almasi on Unsplash", "sourcePage": "https://unsplash.com/photos/5PgHboIliNU", "license": "Unsplash License" },
+        { "file": "assets/abstract-design/joel-filipe-RFDP7_80v5A-unsplash.jpg", "title": "Joel Filipe — Unsplash", "attribution": "Photo by Joel Filipe on Unsplash", "sourcePage": "https://unsplash.com/photos/RFDP7_80v5A", "license": "Unsplash License" },
+        { "file": "assets/abstract-design/vincent-yap-wrWGGlnN3kg-unsplash.jpg", "title": "Vincent Yap — Unsplash", "attribution": "Photo by Vincent Yap on Unsplash", "sourcePage": "https://unsplash.com/photos/wrWGGlnN3kg", "license": "Unsplash License" }
+      ]
+    },
+    {
+      "name": "Technology & Urban",
+      "category": "Technology & Urban",
+      "images": [
+        { "file": "assets/technology-urban/pexels-tara-winstead-8386440.jpg", "title": "Technology visual — Pexels", "attribution": "Photo by Tara Winstead on Pexels", "sourcePage": "https://www.pexels.com/photo/8386440/", "license": "Pexels License" },
+        { "file": "assets/technology-urban/sean-pollock-PhYq704ffdA-unsplash.jpg", "title": "Sean Pollock — Unsplash", "attribution": "Photo by Sean Pollock on Unsplash", "sourcePage": "https://unsplash.com/photos/PhYq704ffdA", "license": "Unsplash License" }
+      ]
+    }
+  ]
+}
