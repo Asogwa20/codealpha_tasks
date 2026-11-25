@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2f66ff"/>
+      <stop offset="100%" stop-color="#00b8a0"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef5ff"/>
+      <stop offset="100%" stop-color="#cfe0ff"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#bg)"/>
+  <rect x="7.5" y="7.5" width="49" height="49" rx="13" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+  <rect x="14" y="14" width="36" height="12" rx="4" fill="url(#screen)"/>
+  <text x="18" y="22.5" font-family="Arial, sans-serif" font-size="7.5" font-weight="700" fill="#1f4ea1">sin</text>
+  <text x="38.5" y="22.5" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#1f4ea1">π</text>
+  <g fill="rgba(255,255,255,0.94)">
+    <rect x="14" y="30.5" width="8" height="7" rx="2.2"/>
+    <rect x="25" y="30.5" width="8" height="7" rx="2.2"/>
+    <rect x="36" y="30.5" width="14" height="7" rx="2.2" fill="#ffb074"/>
+    <rect x="14" y="40.5" width="8" height="7" rx="2.2"/>
+    <rect x="25" y="40.5" width="8" height="7" rx="2.2"/>
+    <rect x="36" y="40.5" width="14" height="7" rx="2.2"/>
+  </g>
+  <g stroke="#1f4ea1" stroke-width="1.8" stroke-linecap="round" fill="none">
+    <path d="M16.5 34h3M18 32.5v3"/>
+    <path d="M27.5 34h3"/>
+    <path d="M16.8 44h2.4M16.8 44c.7-1.5 1.7-1.5 2.4 0c-.7 1.5-1.7 1.5-2.4 0Z" stroke-width="1.45"/>
+    <path d="M28 42.5l2 3M30 42.5l-2 3" stroke-width="1.7"/>
+  </g>
+  <path d="M40.5 34h5" stroke="#183d78" stroke-width="1.9" stroke-linecap="round"/>
+  <path d="M40.5 43.5h5M40.5 45.5h5" stroke="#f7fbff" stroke-width="1.9" stroke-linecap="round"/>
+</svg>

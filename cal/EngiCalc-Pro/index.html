@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="EngiCalc Pro - Engineering and mathematical workspace for scientific calculations, complex numbers, matrices, calculus, graphing, electrical engineering, and unit conversions.">
   <title>EngiCalc Pro</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
@@ -13,10 +14,57 @@
   <a class="skip-link" href="#mainContent">Skip to workspace</a>
   <div class="app-shell">
     <header class="topbar">
-      <button id="menuToggle" class="icon-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">&#9776;</button>
-      <div class="brand">
-        <h1>EngiCalc Pro</h1>
-        <p class="brand-subtitle">Advanced Engineering Scientific Calculator</p>
+      <div class="brand-wrap">
+        <button id="menuToggle" class="icon-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">&#9776;</button>
+        <button id="brandHomeBtn" class="brand-logo" type="button" aria-label="Go to scientific calculator home" title="EngiCalc Pro Home">
+          <svg viewBox="0 0 64 64" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ecLogoBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2f66ff"/>
+                <stop offset="100%" stop-color="#00b8a0"/>
+              </linearGradient>
+              <linearGradient id="ecLogoScreen" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#eef5ff"/>
+                <stop offset="100%" stop-color="#cfe0ff"/>
+              </linearGradient>
+            </defs>
+            <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#ecLogoBg)"/>
+            <rect x="7.5" y="7.5" width="49" height="49" rx="13" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+            <rect x="14" y="14" width="36" height="12" rx="4" fill="url(#ecLogoScreen)"/>
+            <text x="18" y="22.5" font-family="Arial, sans-serif" font-size="7.5" font-weight="700" fill="#1f4ea1">sin</text>
+            <text x="38.5" y="22.5" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="#1f4ea1">π</text>
+            <g fill="rgba(255,255,255,0.94)">
+              <rect x="14" y="30.5" width="8" height="7" rx="2.2"/>
+              <rect x="25" y="30.5" width="8" height="7" rx="2.2"/>
+              <rect x="36" y="30.5" width="14" height="7" rx="2.2" fill="#ffb074"/>
+              <rect x="14" y="40.5" width="8" height="7" rx="2.2"/>
+              <rect x="25" y="40.5" width="8" height="7" rx="2.2"/>
+              <rect x="36" y="40.5" width="14" height="7" rx="2.2"/>
+            </g>
+            <g stroke="#1f4ea1" stroke-width="1.8" stroke-linecap="round" fill="none">
+              <path d="M16.5 34h3M18 32.5v3"/>
+              <path d="M27.5 34h3"/>
+              <path d="M16.8 44h2.4M16.8 44c.7-1.5 1.7-1.5 2.4 0c-.7 1.5-1.7 1.5-2.4 0Z" stroke-width="1.45"/>
+              <path d="M28 42.5l2 3M30 42.5l-2 3" stroke-width="1.7"/>
+            </g>
+            <path d="M40.5 34h5" stroke="#183d78" stroke-width="1.9" stroke-linecap="round"/>
+            <path d="M40.5 43.5h5M40.5 45.5h5" stroke="#f7fbff" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="brand">
+          <h1>EngiCalc Pro</h1>
+          <p class="brand-subtitle">Advanced Engineering Scientific Calculator</p>
+        </div>
+      </div>
+      <div class="header-search">
+        <span class="search-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="6.5"/>
+            <path d="M16 16l4.5 4.5"/>
+          </svg>
+        </span>
+        <label class="sr-only" for="moduleSearch" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;">Search tools</label>
+        <input type="search" id="moduleSearch" placeholder="Search tools and modules..." autocomplete="off" aria-label="Search tools and modules">
       </div>
       <div class="topbar-actions">
         <button id="helpBtn" class="secondary-btn" type="button">Help / Quick Guide</button>
@@ -75,44 +123,66 @@
               <div id="sciError" class="message error" role="alert"></div>
             </div>
             <div class="card">
-              <h3>Keypad</h3>
+              <h3>Scientific Keypad</h3>
               <div class="keypad" id="sciKeypad" aria-label="Scientific calculator keypad">
-                <button data-insert="sin(">sin</button>
-                <button data-insert="cos(">cos</button>
-                <button data-insert="tan(">tan</button>
-                <button data-insert="asin(">asin</button>
-                <button data-insert="acos(">acos</button>
-                <button data-insert="atan(">atan</button>
-                <button data-insert="log(">log</button>
-                <button data-insert="ln(">ln</button>
-                <button data-insert="sqrt(">sqrt</button>
-                <button data-insert="cbrt(">cbrt</button>
-                <button data-insert="^">x^y</button>
-                <button data-insert="!">n!</button>
-                <button data-insert="(">(</button>
-                <button data-insert=")">)</button>
-                <button data-insert="pi">π</button>
-                <button data-insert="e">e</button>
-                <button data-insert="7">7</button>
-                <button data-insert="8">8</button>
-                <button data-insert="9">9</button>
-                <button data-insert="/">÷</button>
-                <button data-insert="4">4</button>
-                <button data-insert="5">5</button>
-                <button data-insert="6">6</button>
-                <button data-insert="*">×</button>
-                <button data-insert="1">1</button>
-                <button data-insert="2">2</button>
-                <button data-insert="3">3</button>
-                <button data-insert="-">−</button>
-                <button data-insert="0">0</button>
-                <button data-insert=".">.</button>
-                <button data-insert="%">%</button>
-                <button data-insert="+">+</button>
-                <button data-insert="E">EXP</button>
-                <button data-action="ans">Ans</button>
-                <button data-action="fraction">a/b</button>
-                <button data-action="equals" class="primary-btn">=</button>
+                <button type="button" class="key-func" data-insert="sin(">sin</button>
+                <button type="button" class="key-func" data-insert="cos(">cos</button>
+                <button type="button" class="key-func" data-insert="tan(">tan</button>
+                <button type="button" class="key-func" data-insert="log(">log</button>
+                <button type="button" class="key-func" data-insert="ln(">ln</button>
+
+                <button type="button" class="key-func" data-insert="asin(">sin⁻¹</button>
+                <button type="button" class="key-func" data-insert="acos(">cos⁻¹</button>
+                <button type="button" class="key-func" data-insert="atan(">tan⁻¹</button>
+                <button type="button" class="key-func" data-insert="sqrt(">√</button>
+                <button type="button" class="key-func" data-insert="abs(">abs</button>
+
+                <button type="button" class="key-func" data-insert="^2">x²</button>
+                <button type="button" class="key-func" data-insert="^3">x³</button>
+                <button type="button" class="key-func" data-insert="^">xʸ</button>
+                <button type="button" class="key-func" data-insert="^(-1)">1/x</button>
+                <button type="button" class="key-func" data-insert="!">n!</button>
+
+                <button type="button" class="key-func" data-insert="cbrt(">∛</button>
+                <button type="button" class="key-func" data-insert="nthRoot(">n√</button>
+                <button type="button" class="key-func" data-insert="*10^(">EXP</button>
+                <button type="button" class="key-func" data-insert="10^(">10ˣ</button>
+                <button type="button" class="key-func" data-insert=",">,</button>
+
+                <button type="button" class="key-func" data-insert="pi">π</button>
+                <button type="button" class="key-func" data-insert="e">e</button>
+                <button type="button" class="key-util" data-insert="(">(</button>
+                <button type="button" class="key-util" data-insert=")">)</button>
+                <button type="button" class="key-op" data-insert="%">%</button>
+
+                <button type="button" class="key-danger" data-action="clear">AC</button>
+                <button type="button" class="key-util" data-action="backspace">⌫</button>
+                <button type="button" class="key-util" data-action="ans">Ans</button>
+                <button type="button" class="key-util" data-action="fraction">a/b</button>
+                <button type="button" class="key-op" data-insert="/">÷</button>
+
+                <button type="button" data-insert="7">7</button>
+                <button type="button" data-insert="8">8</button>
+                <button type="button" data-insert="9">9</button>
+                <button type="button" class="key-op" data-insert="*">×</button>
+                <button type="button" class="key-op" data-insert="-">−</button>
+
+                <button type="button" data-insert="4">4</button>
+                <button type="button" data-insert="5">5</button>
+                <button type="button" data-insert="6">6</button>
+                <button type="button" class="key-op" data-insert="+">+</button>
+                <button type="button" class="key-func" data-insert="^(1/3)">∛</button>
+
+                <button type="button" data-insert="1">1</button>
+                <button type="button" data-insert="2">2</button>
+                <button type="button" data-insert="3">3</button>
+                <button type="button" data-insert=".">.</button>
+                <button type="button" class="key-equals primary-btn" data-action="equals">=</button>
+
+                <button type="button" class="key-wide" data-insert="0">0</button>
+                <button type="button" data-insert="00">00</button>
+                <button type="button" class="key-util" data-insert="*10^(">EXP</button>
+                <button type="button" class="key-func" data-insert="^(1/">n√</button>
               </div>
             </div>
           </div>

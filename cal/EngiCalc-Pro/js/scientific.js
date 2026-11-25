@@ -34,6 +34,10 @@
         insertText(lastAnswer);
       } else if (action === 'fraction') {
         convertToFraction();
+      } else if (action === 'clear') {
+        clearAll();
+      } else if (action === 'backspace') {
+        deleteChar();
       }
     });
 

@@ -8,6 +8,8 @@
     initWelcomeAndHelp();
     initModules();
     initHistoryControls();
+    initModuleSearch();
+    initBrandHome();
     window.HistoryStore.renderHistory();
   }
 
@@ -252,6 +254,29 @@
         }
       });
     }
+  }
+
+  function initModuleSearch() {
+    const search = $('moduleSearch');
+    if (!search) return;
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      document.querySelectorAll('.nav-btn[data-module]').forEach((btn) => {
+        const text = btn.textContent.toLowerCase();
+        const match = !q || text.includes(q);
+        btn.closest('li').style.display = match ? '' : 'none';
+      });
+    });
+  }
+
+  function initBrandHome() {
+    const btn = $('brandHomeBtn');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      showModule('scientific');
+      const search = $('moduleSearch');
+      if (search) { search.value = ''; search.dispatchEvent(new Event('input')); }
+    });
   }
 
   function reuseHistoryEntry(entry) {
